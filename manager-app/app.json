@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "ScoreboardController",
+    "slug": "ScoreboardController",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "./plugins/backgroundTimer/app.plugin.js",
+        "backgroundTimer"
+      ]
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "package": "com.deportivonews.scoreboardcontroller",
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.afdelgadoisc.ScoreboardController"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "832db099-918b-47d0-ba5b-78dc97d62071"
+      }
+    }
+  }
+}

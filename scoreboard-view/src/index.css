@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700');
+
+:root {
+--text: #000000;
+--textinverted: #eee;
+--bkg: #f7e181;
+--bkgwhite: #fff;
+--bkgblue: #16498c;
+--line:#000000;
+}
+*{ 
+  margin:0;
+  padding:0;
+}
+strong, em {
+  font-weight: normal;
+  font-style: normal;
+}
