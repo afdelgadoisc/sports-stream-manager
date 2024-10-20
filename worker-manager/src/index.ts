@@ -101,15 +101,41 @@ async function blobToBase64(blob : Blob) {
     return `data:image/gif;base64,${btoa(binary)}`;
 }
 
-async function getBannerHTML(bannersGif: R2ObjectBody) {
+async function getBannerHTML(bannersGif: R2ObjectBody, isMobile: boolean) {
 	// Obtener el blob del GIF
 	const gifBlob = await bannersGif.blob();
 
 	// Convertir el Blob a Base64 para incrustar en HTML
 	const base64Data = await blobToBase64(gifBlob);
-
+	let html = '';
 	// Crear HTML con el GIF incrustado
-	const html = `
+	if (isMobile) {
+		html = `
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<title>Publicidad</title>
+			<style>
+				* {
+					margin: 0;
+					padding: 0;
+					box-sizing: border-box;
+				}
+				body, html {
+					width: 100%;
+					height: 100%;
+				}
+			</style>
+		</head>
+		<body>
+			<div>
+				<img src="${base64Data}" alt="Publicidad" style="width: 100%;">
+			</div>
+		</body>
+		</html>
+	`;
+	} else {
+		html = `
 		<!DOCTYPE html>
 		<html>
 		<head>
@@ -133,6 +159,7 @@ async function getBannerHTML(bannersGif: R2ObjectBody) {
 		</body>
 		</html>
 	`;
+	}
 	return html;
 }
 
@@ -140,7 +167,7 @@ export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const url: URL = new URL(request.url);
 		const pathSegments = url.pathname.split('/').filter((p) => p);
-		if (!hasValidHeader(request, env) && url.pathname !== '/publicidad') {
+		if (!hasValidHeader(request, env) && url.pathname !== '/publicidad' && url.pathname !== '/publicidad-movil') {
 			return new Response('401 Unauthorized', { status: 401 });
 		}
 		switch (request.method) {
@@ -150,7 +177,20 @@ export default {
 					if (!bannersGif) {
 						return new Response('404 Not Found', { status: 404 });
 					}
-					const html = await getBannerHTML(bannersGif);
+					const html = await getBannerHTML(bannersGif, false);
+					return new Response(html, {
+						status: 200,
+						headers: {
+							'Content-Type': 'text/html',
+						},
+					});
+				}
+				if (url.pathname === '/publicidad-movil') {
+					const bannersGif: R2ObjectBody | null = await env.MY_BUCKET.get('publi.gif');
+					if (!bannersGif) {
+						return new Response('404 Not Found', { status: 404 });
+					}
+					const html = await getBannerHTML(bannersGif,true);
 					return new Response(html, {
 						status: 200,
 						headers: {

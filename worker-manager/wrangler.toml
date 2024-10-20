@@ -96,7 +96,7 @@ workers_dev = true
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
 [[r2_buckets]]
 binding = "MY_BUCKET"
-bucket_name = "my-bucket"
+bucket_name = "publi-depornews"
 
 # Bind another Worker service. Use this binding to call another Worker without network overhead.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
