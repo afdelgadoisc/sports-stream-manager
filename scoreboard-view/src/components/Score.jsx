@@ -28,7 +28,7 @@ const Score = ({value, isHome}) => {
   return (
     <>
       <div className={boxPointsClassName} id={idScore}>{value}</div>
-      {showGoalText && <div className={classNameGoalText} style={gooolStyle}>GOOOOL!!</div>}
+      {showGoalText && <div className={classNameGoalText} style={gooolStyle}></div>}
     </>
   );
 };
